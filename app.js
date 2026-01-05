@@ -106,6 +106,17 @@ app.delete("/api/books/:id", (req, res) => {
 	})
 })
 
+app.get("/api/unsafe-search", (req, res) => {
+	const keyword = req.query.keyword
+	db.all("SELECT * FROM books WHERE title LIKE '%" + keyword + "%'", (err, rows) => {
+		if (err) {
+			res.status(500).json({ error: err.message })
+			return
+		}
+		res.json({ results: rows })
+	})
+})
+
 // Start server
 app.listen(PORT, () => {
 	console.log(`Server is running on http://localhost:${PORT}`)
