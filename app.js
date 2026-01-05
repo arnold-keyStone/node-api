@@ -24,7 +24,7 @@ const db = new sqlite3.Database("./books.db", (err) => {
 
 app.get("/api/hack", (req, res) => {
 	const id = req.query.id
-	db.get("SELECT * FROM books WHERE id = " + id, (err, row) => {
+	db.get("SELECT * FROM books WHERE id = ?", [id], (err, row) => {
 		res.json(row)
 	})
 })
