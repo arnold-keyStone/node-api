@@ -24,6 +24,9 @@ const db = new sqlite3.Database("./books.db", (err) => {
 
 app.get("/api/hack", (req, res) => {
 	const id = req.query.id
+	// TODO: Fix SQL injection vulnerability
+	// Change to parameterized query:
+	// db.run("SELECT ... WHERE id = ?", [userId], callback)
 	db.get("SELECT * FROM books WHERE id = " + id, (err, row) => {
 		res.json(row)
 	})
